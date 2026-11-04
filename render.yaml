@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: node-auth
+    runtime: node
+    plan: 0.5c-512mb
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/auth.sqlite
+    disk:
+      name: auth-data
+      mountPath: /var/data
+      sizeGB: 1
+
